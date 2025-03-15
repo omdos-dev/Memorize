@@ -9,17 +9,57 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            CardView(isFaceUp: true)
-            CardView()
-            CardView()
+        let emojisFood: Array<String> = ["🍎", "🍊", "🍇", "🍒"]
+        let emojisParty: Array<String> = ["🎉", "🎊", "🥳", "🪅"]
+        let emojisPets: Array<String> = ["🐶", "🐱", "🐰", "🐹"]
+        let themes: Array<Array> = [emojisFood, emojisParty, emojisPets]
+       
+        VStack{
+            Text("Memorize!").font(.largeTitle)
+            HStack {
+                ForEach(0..<emojisFood.count, id: \.self){ index in
+                    CardView(content: emojisFood[index])
+                }
+            }
+            .foregroundColor(.teal)
+            
+            HStack{
+                Button(action: {
+                    
+                }){
+                    VStack {
+                        Image(systemName: "carrot.fill")
+                        Text("Food")
+                    }
+                }
+                Spacer()
+                Button(action: {
+                    
+                }){
+                    VStack {
+                        Image(systemName: "party.popper.fill")
+                        Text("Party")
+                    }
+                }
+                Spacer()
+                Button(action: {
+                    
+                }){
+                    VStack {
+                        Image(systemName: "pawprint.circle.fill")
+                        Text("Pets")
+                    }
+                }
+            }
+            .imageScale(Image.Scale.large)
         }
-        .foregroundColor(.orange)
+        
         .padding()
     }
 }
 
 struct CardView: View{
+    let content: String
     @State var isFaceUp = false
     
     var body: some View{
@@ -28,12 +68,12 @@ struct CardView: View{
             if isFaceUp{
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text("Hamada").font(.largeTitle)
+                Text(content).font(.largeTitle)
             } else{
                 base.fill()
             }
         }.onTapGesture {
-            isFaceUp = !isFaceUp
+            isFaceUp.toggle()
         }
     }
 }
